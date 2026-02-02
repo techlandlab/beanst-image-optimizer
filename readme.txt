@@ -3,7 +3,7 @@ Contributors: techlandlab
 Tags: images, webp, avif, optimization, converter
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.0.9
+Stable tag: 1.1.2
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -53,53 +53,4 @@ We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 = 1.0.1 =
 * Initial public release structure.
-* Tweak: Documentation updates for data handling.
 
-= 2.0.8 =
-*   **Style**: Isolated CSS variables to plugin scope to prevent conflicts with other admin styles.
-*   **Tweak**: Verified asset consistencies.
-
-= 2.0.7 =
-*   **Security**: Hardened Admin JS against XSS (replaced string concatenation with standard DOM API).
-*   **Security**: Added `rel="noopener noreferrer"` to all external links.
-
-= 2.0.6 =
-*   **Fix**: Update support links to point to WordPress.org forums.
-*   **Cleanup**: Removed unused legacy view files.
-
-= 2.0.5 =
-*   **Compliance**: Refined plugin description to accurately reflect local algorithmic processing (removed "AI" terminology).
-*   **Tweak**: Updated guidelines compliance for repository submission.
-
-= 2.0.4 =
-*   **Security**: Applied strict escaping output (esc_html, esc_url) to all admin views.
-*   **Audit**: Verified enqueue isolation to load scripts only on plugin pages.
-
-= 2.0.3 =
-*   **Fix**: Removed external branding links from settings page footer to comply with repository guidelines.
-
-= 2.0.2 =
-*   **Fix**: Replaced filesystem operations with standard WordPress file system API.
-*   **Fix**: Removed potential unsafe file deletion in uninstall process.
-*   **Fix**: Reduced tag count for repository compliance.
-*   **Tweak**: Updated descriptions to align with WordPress.org guidelines.
-
-= 2.0.1 =
-*   **UX Fix**: Improved text contrast in the Hero Section for better readability.
-*   **Security**: Enhanced input sanitization for bulk actions.
-
-= 2.0.0 =
-*   **NEW UX**: Complete redesign of the settings page with a modern, simplified dashboard.
-*   **Feature**: Added "Hero Section" with visual progress tracking.
-*   **Feature**: Added "Quick Action Cards" for common tasks.
-*   **Improvement**: Implemented AJAX-based toggle switches for instant settings updates.
-*   **Improvement**: Replaced tabs with a single, scrollable page layout.
-*   **Dev**: PHPCS security fixes and code modernization.
-
-= 1.0.1 =
-*   Added Visual Proof comparison slider.
-*   Added PDF Optimization support.
-*   Added Directory Janitor.
-
-= 1.0.0 =
-*   Initial release.
