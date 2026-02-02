@@ -179,7 +179,7 @@ class BeanST_Scanner {
 		foreach ( $files as $file ) {
 			if ( file_exists( $file ) && is_file( $file ) ) {
 				$freed += filesize( $file );
-				@unlink( $file );
+				wp_delete_file( $file );
 				$count++;
 			}
 		}

@@ -1,14 +1,14 @@
 === BeanST Image Optimizer ===
 Contributors: techlandlab
-Tags: images, webp, avif, optimization, converter, pdf, seo
+Tags: images, webp, avif, optimization, converter
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-AI-powered AVIF & WebP converter for WordPress. Zero limits, local processing, PageSpeed boost guaranteed. Includes PDF compression and Directory Scanning.
+AI-powered AVIF & WebP converter for WordPress. Zero limits, local processing, helps improve Core Web Vitals. Includes PDF compression and Directory Scanning.
 
 == Description ==
 
@@ -44,6 +44,12 @@ No. All processing is done locally on your server using PHP extensions (Imagick/
 We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 == Changelog ==
+
+= 2.0.2 =
+*   **Fix**: Replaced filesystem operations with standard WordPress file system API.
+*   **Fix**: Removed potential unsafe file deletion in uninstall process.
+*   **Fix**: Reduced tag count for repository compliance.
+*   **Tweak**: Updated descriptions to align with WordPress.org guidelines.
 
 = 2.0.1 =
 *   **UX Fix**: Improved text contrast in the Hero Section for better readability.

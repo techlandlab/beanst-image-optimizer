@@ -120,11 +120,11 @@ class BeanST_Converter {
 				$new_size = filesize( $temp_file );
 				if ( $new_size < $orig_size ) {
 					copy( $temp_file, $file_path );
-					unlink( $temp_file );
+					wp_delete_file( $temp_file );
 					update_post_meta( $id, '_beanst_optimized', time() );
 					return true;
 				}
-				unlink( $temp_file );
+				wp_delete_file( $temp_file );
 			}
 		} catch ( Exception $e ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Essential for debugging PDF optimization failures

@@ -11,10 +11,3 @@ delete_option('beanst_optimizer_license');
 
 // Delete transients
 delete_transient('beanst_license_check');
-
-// Optional: Delete converted images
-// $uploads = wp_upload_dir();
-// $files = glob($uploads['basedir'] . '/**/*.{webp,avif}', GLOB_BRACE);
-// foreach ($files as $file) {
-//     unlink($file);
-// }
