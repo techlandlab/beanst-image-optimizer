@@ -48,24 +48,24 @@ if ( $percent === 100 && $total_images > 0 ) {
 					<span class="beanst-stat-label">Optimized</span>
 				</div>
 				<div class="beanst-stat-item">
-					<span class="beanst-stat-number beanst-highlight"><?php echo $stats['savings']; ?></span>
+					<span class="beanst-stat-number beanst-highlight"><?php echo esc_html( $stats['savings'] ); ?></span>
 					<span class="beanst-stat-label">Disk Space Saved</span>
 				</div>
 			</div>
 
 			<div class="beanst-progress-wrapper">
 				<div class="beanst-progress-bar-hero">
-					<div class="beanst-progress-fill-hero" style="width: <?php echo $percent; ?>%"></div>
+					<div class="beanst-progress-fill-hero" style="width: <?php echo esc_attr( $percent ); ?>%"></div>
 				</div>
 				<div class="beanst-progress-label">
-					<span><?php echo $percent; ?>% Complete</span>
-					<span><?php echo $remaining; ?> remaining</span>
+					<span><?php echo esc_html( $percent ); ?>% Complete</span>
+					<span><?php echo esc_html( $remaining ); ?> remaining</span>
 				</div>
 			</div>
 
 			<?php if ( $remaining > 0 ) : ?>
 				<button id="beanst-hero-optimize" class="button button-primary beanst-hero-cta">
-					Optimize <?php echo $remaining; ?> Remaining Images &rarr;
+					Optimize <?php echo esc_html( $remaining ); ?> Remaining Images &rarr;
 				</button>
 			<?php else : ?>
 				<div class="beanst-success-message">
@@ -166,23 +166,23 @@ if ( $percent === 100 && $total_images > 0 ) {
 	<div class="beanst-section">
 		<div class="beanst-seo-header">
 			<h3 class="beanst-section-title">SEO & Accessibility</h3>
-			<span id="beanst-seo-score-badge" class="beanst-seo-score-badge">Score: <?php echo $seo_audit['score']; ?>/100</span>
+			<span id="beanst-seo-score-badge" class="beanst-seo-score-badge">Score: <?php echo esc_html( $seo_audit['score'] ); ?>/100</span>
 		</div>
 
 		<div class="beanst-stats-card">
 			<div class="beanst-seo-metrics">
 				<div class="beanst-seo-metric">
-					<span class="beanst-seo-metric-value" id="beanst-bad-names-count"><?php echo $seo_audit['bad_names_count']; ?></span>
+					<span class="beanst-seo-metric-value" id="beanst-bad-names-count"><?php echo esc_html( $seo_audit['bad_names_count'] ); ?></span>
 					<span class="beanst-seo-metric-label">Generic Filenames</span>
 				</div>
 				<div class="beanst-seo-metric">
-					<span class="beanst-seo-metric-value" id="beanst-missing-alt-count"><?php echo $seo_audit['missing_alt_count']; ?></span>
+					<span class="beanst-seo-metric-value" id="beanst-missing-alt-count"><?php echo esc_html( $seo_audit['missing_alt_count'] ); ?></span>
 					<span class="beanst-seo-metric-label">Missing Alt Text</span>
 				</div>
 			</div>
 			
 			<p class="beanst-seo-help">
-				💡 <strong>Quick Fix:</strong> Visit your <a href="<?php echo admin_url('upload.php?mode=list'); ?>">Media Library</a> and look for the "SEO Review" column to fix these issues.
+				💡 <strong>Quick Fix:</strong> Visit your <a href="<?php echo esc_url( admin_url('upload.php?mode=list') ); ?>">Media Library</a> and look for the "SEO Review" column to fix these issues.
 			</p>
 		</div>
 	</div>
