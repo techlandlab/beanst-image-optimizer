@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    console.log('BeanST Optimizer Admin JS Loaded v1.0.1');
+    console.log('BeanST Optimizer Admin JS Loaded v1.1.2');
 
     // Tab Switching - Scoped and Namespaced
     $(document).on('click', '.beanst-tab-link', function (e) {

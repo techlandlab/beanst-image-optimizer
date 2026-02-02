@@ -45,9 +45,14 @@ We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 == Changelog ==
 
-= 2.0.9 =
-* Cleanup: Removed legacy settings template.
-* Maintenance: Verified uninstall procedures.
+= 1.1.2 =
+* Public Release Candidate.
+* Compliance: Full Internationalization (I18n) support.
+* Security: Added index.php silencers to all directories.
+* Cleanup: Removed legacy files.
+
+= 1.0.1 =
+* Initial public release structure.
 * Tweak: Documentation updates for data handling.
 
 = 2.0.8 =
