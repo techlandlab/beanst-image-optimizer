@@ -15,7 +15,7 @@ class BeanST_Bulk {
 		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'Unauthorized' );
+			wp_send_json_error( __( 'Unauthorized', 'beanst-image-optimizer' ) );
 		}
 
 		$query = new WP_Query( array(
@@ -53,7 +53,7 @@ class BeanST_Bulk {
 		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'Unauthorized' );
+			wp_send_json_error( __( 'Unauthorized', 'beanst-image-optimizer' ) );
 		}
 
 		$converter = new BeanST_Converter();
@@ -62,7 +62,7 @@ class BeanST_Bulk {
 		$force = isset( $_POST['force'] ) && sanitize_text_field( wp_unslash( $_POST['force'] ) ) === 'true';
 		
 		if ( ! isset( $_POST['id'] ) ) {
-			wp_send_json_error( 'Missing ID parameter' );
+			wp_send_json_error( __( 'Missing ID parameter', 'beanst-image-optimizer' ) );
 		}
 		
 		$id = sanitize_text_field( wp_unslash( $_POST['id'] ) );
@@ -73,11 +73,11 @@ class BeanST_Bulk {
 			$full_path = ABSPATH . $rel_path;
 
 			if ( ! file_exists( $full_path ) ) {
-				wp_send_json_error( "External file not found: $rel_path" );
+				wp_send_json_error( sprintf( __( 'External file not found: %s', 'beanst-image-optimizer' ), esc_html( $rel_path ) ) );
 			}
 
 			if ( ! $this->check_memory_safety() ) {
-				wp_send_json_error( 'Server memory low.' );
+				wp_send_json_error( __( 'Server memory low.', 'beanst-image-optimizer' ) );
 			}
 
 			$orig_size = filesize( $full_path );
@@ -96,7 +96,7 @@ class BeanST_Bulk {
 			}
 
 			wp_send_json_success( array(
-				'message'  => "Optimized External: $rel_path",
+				'message'  => sprintf( __( 'Optimized External: %s', 'beanst-image-optimizer' ), esc_html( $rel_path ) ),
 				'filename' => basename( $full_path ),
 				'memory'   => $this->get_memory_usage()
 			) );
@@ -107,7 +107,7 @@ class BeanST_Bulk {
 		$attachment_id = intval( $id );
 		
 		if ( ! $attachment_id ) {
-			wp_send_json_error( 'Invalid attachment ID' );
+			wp_send_json_error( __( 'Invalid attachment ID', 'beanst-image-optimizer' ) );
 		}
 
 		$metadata = wp_get_attachment_metadata( $attachment_id );
@@ -116,18 +116,18 @@ class BeanST_Bulk {
 		if ( $metadata || $mime === 'application/pdf' ) {
 			// Memory Guard: Skip if less than 10MB free (simple heuristic)
 			if ( ! $this->check_memory_safety() ) {
-				wp_send_json_error( 'Server memory low. Pausing for safety.' );
+				wp_send_json_error( __( 'Server memory low. Pausing for safety.', 'beanst-image-optimizer' ) );
 			}
 
 			$converter->auto_convert_attachment( $metadata, $attachment_id, $force );
 			
 			wp_send_json_success( array(
-				'message'  => "Processed ID: $attachment_id",
+				'message'  => sprintf( __( 'Processed ID: %d', 'beanst-image-optimizer' ), $attachment_id ),
 				'filename' => basename( get_attached_file( $attachment_id ) ),
 				'memory'   => $this->get_memory_usage()
 			) );
 		} else {
-			wp_send_json_error( "No metadata for ID: $attachment_id" );
+			wp_send_json_error( sprintf( __( 'No metadata for ID: %d', 'beanst-image-optimizer' ), $attachment_id ) );
 		}
 	}
 

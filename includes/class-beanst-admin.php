@@ -29,8 +29,8 @@ class BeanST_Admin {
 
 	public function add_admin_menu() {
 		add_options_page(
-			'BeanST Optimizer',
-			'BeanST Optimizer',
+			__( 'BeanST Optimizer', 'beanst-image-optimizer' ),
+			__( 'BeanST Optimizer', 'beanst-image-optimizer' ),
 			'manage_options',
 			'beanst-image-optimizer',
 			array( $this, 'render_settings_page' )
@@ -42,23 +42,23 @@ class BeanST_Admin {
 
 		add_settings_section(
 			'beanst_main_section',
-			'Optimization Settings',
+			__( 'Optimization Settings', 'beanst-image-optimizer' ),
 			null,
 			'beanst-image-optimizer'
 		);
 
 		add_settings_field(
 			'auto_convert',
-			'Auto-Convert on Upload',
+			__( 'Auto-Convert on Upload', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'auto_convert', 'label' => 'Automatically optimize new images' )
+			array( 'key' => 'auto_convert', 'label' => __( 'Automatically optimize new images', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'formats',
-			'Output Formats',
+			__( 'Output Formats', 'beanst-image-optimizer' ),
 			array( $this, 'render_formats_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section'
@@ -66,7 +66,7 @@ class BeanST_Admin {
 
 		add_settings_field(
 			'quality',
-			'Image Quality',
+			__( 'Image Quality', 'beanst-image-optimizer' ),
 			array( $this, 'render_number_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
@@ -75,83 +75,83 @@ class BeanST_Admin {
 
 		add_settings_field(
 			'max_width',
-			'Max Image Width',
+			__( 'Max Image Width', 'beanst-image-optimizer' ),
 			array( $this, 'render_number_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'max_width', 'min' => 0, 'max' => 9999, 'default' => 2560, 'label' => 'px (0 to disable)' )
+			array( 'key' => 'max_width', 'min' => 0, 'max' => 9999, 'default' => 2560, 'label' => __( 'px (0 to disable)', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'strip_metadata',
-			'Strip Metadata (EXIF)',
+			__( 'Strip Metadata (EXIF)', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'strip_metadata', 'label' => 'Remove all EXIF and metadata for smaller files' )
+			array( 'key' => 'strip_metadata', 'label' => __( 'Remove all EXIF and metadata for smaller files', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'lazy_load',
-			'Enable Lazy Loading',
+			__( 'Enable Lazy Loading', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'lazy_load', 'label' => 'Add loading="lazy" to all images' )
+			array( 'key' => 'lazy_load', 'label' => __( 'Add loading="lazy" to all images', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'keep_backups',
-			'Backup Original Images',
+			__( 'Backup Original Images', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'keep_backups', 'label' => 'Keep a copy of the original image before resizing/optimizing' )
+			array( 'key' => 'keep_backups', 'label' => __( 'Keep a copy of the original image before resizing/optimizing', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'pdf_optimization',
-			'PDF Optimization',
+			__( 'PDF Optimization', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'pdf_optimization', 'label' => 'Compress PDF documents in the Media Library' )
+			array( 'key' => 'pdf_optimization', 'label' => __( 'Compress PDF documents in the Media Library', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'scan_paths',
-			'Directory Janitor (Scan Paths)',
+			__( 'Directory Janitor (Scan Paths)', 'beanst-image-optimizer' ),
 			array( $this, 'render_textarea_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'scan_paths', 'label' => 'Paths outside Media Library to scan (one per line). Absolute paths or relative to WordPress root.', 'placeholder' => "wp-content/themes/\ncustom-images/" )
+			array( 'key' => 'scan_paths', 'label' => __( 'Paths outside Media Library to scan (one per line). Absolute paths or relative to WordPress root.', 'beanst-image-optimizer' ), 'placeholder' => "wp-content/themes/\ncustom-images/" )
 		);
 
 		add_settings_field(
 			'heic_convert',
-			'Smart HEIC Support',
+			__( 'Smart HEIC Support', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'heic_convert', 'label' => 'Automatically convert iPhone (HEIC) uploads to JPEG/WebP' )
+			array( 'key' => 'heic_convert', 'label' => __( 'Automatically convert iPhone (HEIC) uploads to JPEG/WebP', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'bulk_delay',
-			'Bulk Processing Delay',
+			__( 'Bulk Processing Delay', 'beanst-image-optimizer' ),
 			array( $this, 'render_number_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'bulk_delay', 'min' => 0, 'max' => 5000, 'default' => 0, 'label' => 'ms (delay between each image)' )
+			array( 'key' => 'bulk_delay', 'min' => 0, 'max' => 5000, 'default' => 0, 'label' => __( 'ms (delay between each image)', 'beanst-image-optimizer' ) )
 		);
 
 		add_settings_field(
 			'lqip_blur',
-			'Ultra-Premium Blur-Up (LQIP)',
+			__( 'Ultra-Premium Blur-Up (LQIP)', 'beanst-image-optimizer' ),
 			array( $this, 'render_checkbox_field' ),
 			'beanst-image-optimizer',
 			'beanst_main_section',
-			array( 'key' => 'lqip_blur', 'label' => 'Generate tiny blurred placeholders for smooth loading transitions' )
+			array( 'key' => 'lqip_blur', 'label' => __( 'Generate tiny blurred placeholders for smooth loading transitions', 'beanst-image-optimizer' ) )
 		);
 	}
 
@@ -251,7 +251,34 @@ class BeanST_Admin {
 		
 		wp_localize_script( 'beanst-admin-js', 'beanst_ajax', array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce'    => wp_create_nonce( 'beanst_bulk_action' )
+			'nonce'    => wp_create_nonce( 'beanst_bulk_action' ),
+			'i18n'     => array(
+				'confirm_optimize_all' => __( 'Are you sure you want to optimize all images? This might take a while.', 'beanst-image-optimizer' ),
+				'paused_status'        => __( 'Paused. %1$s / %2$s images processed.', 'beanst-image-optimizer' ),
+				'resuming'             => __( 'Resuming Engine...', 'beanst-image-optimizer' ),
+				'initializing'         => __( 'Initializing systems...', 'beanst-image-optimizer' ),
+				'found_images'         => __( 'Found %s images. Launching optimization...', 'beanst-image-optimizer' ),
+				'error_fetching'       => __( 'Error fetching image data', 'beanst-image-optimizer' ),
+				'unknown_file'         => __( 'Unknown file', 'beanst-image-optimizer' ),
+				'optimization_complete'=> __( 'Optimization Complete! 🎉 All images are now optimized.', 'beanst-image-optimizer' ),
+				'optimize_library_again'=> __( 'Optimize Library Again', 'beanst-image-optimizer' ),
+				'applying'             => __( 'Applying...', 'beanst-image-optimizer' ),
+				'apply_seo'            => __( 'Apply SEO', 'beanst-image-optimizer' ),
+				'loading'              => __( 'Loading...', 'beanst-image-optimizer' ),
+				'scanning_uploads'     => __( 'Scanning uploads...', 'beanst-image-optimizer' ),
+				'scan_orphans'         => __( 'Scan for Unused Files', 'beanst-image-optimizer' ),
+				'error_scanning'       => __( 'Error scanning: ', 'beanst-image-optimizer' ),
+				'unknown_error'        => __( 'An unknown error occurred.', 'beanst-image-optimizer' ),
+				'no_orphans'           => __( 'No orphaned files found.', 'beanst-image-optimizer' ),
+				'select_one_delete'    => __( 'Please select at least one file to delete.', 'beanst-image-optimizer' ),
+				'confirm_delete'       => __( 'Are you sure you want to delete %s selected files? This cannot be undone.', 'beanst-image-optimizer' ),
+				'deleting'             => __( 'Deleting...', 'beanst-image-optimizer' ),
+				'error_deleting'       => __( 'Error deleting: ', 'beanst-image-optimizer' ),
+				'clear_selected'       => __( 'Clear Selected', 'beanst-image-optimizer' ),
+				'success_cleaned'      => __( 'Success! Cleaned %1$s files, freed %2$s space.', 'beanst-image-optimizer' ),
+				'enabled'              => __( 'Enabled', 'beanst-image-optimizer' ),
+				'disabled'             => __( 'Disabled', 'beanst-image-optimizer' )
+			)
 		) );
 	}
 
@@ -301,8 +328,8 @@ class BeanST_Admin {
 	}
 
 	public function add_media_columns( $columns ) {
-		$columns['beanst_status'] = 'BeanST Status';
-		$columns['beanst_seo']    = 'SEO Review';
+		$columns['beanst_status'] = __( 'BeanST Status', 'beanst-image-optimizer' );
+		$columns['beanst_seo']    = __( 'SEO Review', 'beanst-image-optimizer' );
 		return $columns;
 	}
 
@@ -310,15 +337,15 @@ class BeanST_Admin {
 		if ( 'beanst_status' === $column_name ) {
 			$stats = BeanST_Stats::get_attachment_stats( $id );
 			if ( $stats['is_optimized'] ) {
-				echo '<span class="beanst-status-ok" style="color: #46b450; font-weight: bold;">✓ Optimized</span>';
-				echo '<br><small>Saved: ' . esc_html( $stats['percent'] ) . '% (' . size_format( $stats['savings_bytes'], 1 ) . ')</small>';
+				echo '<span class="beanst-status-ok" style="color: #46b450; font-weight: bold;">' . esc_html__( '✓ Optimized', 'beanst-image-optimizer' ) . '</span>';
+				echo '<br><small>' . sprintf( __( 'Saved: %s%% (%s)', 'beanst-image-optimizer' ), esc_html( $stats['percent'] ), size_format( $stats['savings_bytes'], 1 ) ) . '</small>';
 				
 				$mime = get_post_mime_type( $id );
 				if ( strpos( $mime, 'image' ) !== false ) {
-					echo '<br><a href="#" class="beanst-compare-link" data-id="' . esc_attr( $id ) . '" style="font-size: 11px; text-decoration: underline; color: #2271b1;">Compare Original</a>';
+					echo '<br><a href="#" class="beanst-compare-link" data-id="' . esc_attr( $id ) . '" style="font-size: 11px; text-decoration: underline; color: #2271b1;">' . esc_html__( 'Compare Original', 'beanst-image-optimizer' ) . '</a>';
 				}
 			} else {
-				echo '<span class="beanst-status-none" style="color: #999;">Not optimized</span>';
+				echo '<span class="beanst-status-none" style="color: #999;">' . esc_html__( 'Not optimized', 'beanst-image-optimizer' ) . '</span>';
 			}
 		} elseif ( 'beanst_seo' === $column_name ) {
 			$suggestions = BeanST_SEO::get_suggestions( $id );
@@ -327,15 +354,15 @@ class BeanST_Admin {
 			if ( $suggestions['needs_rename'] || $suggestions['needs_alt'] ) {
 				echo '<div class="beanst-seo-suggestion" data-id="' . esc_attr( $id ) . '">';
 				if ( $suggestions['needs_rename'] ) {
-					echo '<div style="margin-bottom: 5px;"><strong>Rename:</strong><br><del style="color:#999; font-size:10px;">' . esc_html( $suggestions['current_name'] ) . '</del> → <span style="color:#2271b1;">' . esc_html( $suggestions['proposed_name'] ) . '</span></div>';
+					echo '<div style="margin-bottom: 5px;"><strong>' . esc_html__( 'Rename:', 'beanst-image-optimizer' ) . '</strong><br><del style="color:#999; font-size:10px;">' . esc_html( $suggestions['current_name'] ) . '</del> → <span style="color:#2271b1;">' . esc_html( $suggestions['proposed_name'] ) . '</span></div>';
 				}
 				if ( $suggestions['needs_alt'] ) {
-					echo '<div style="margin-bottom: 5px;"><strong>Alt:</strong> <span style="color:#2271b1;">' . esc_html( $suggestions['proposed_alt'] ) . '</span></div>';
+					echo '<div style="margin-bottom: 5px;"><strong>' . esc_html__( 'Alt:', 'beanst-image-optimizer' ) . '</strong> <span style="color:#2271b1;">' . esc_html( $suggestions['proposed_alt'] ) . '</span></div>';
 				}
-				echo '<button class="button button-small beanst-apply-seo" data-id="' . esc_attr( $id ) . '">Apply SEO</button>';
+				echo '<button class="button button-small beanst-apply-seo" data-id="' . esc_attr( $id ) . '">' . esc_html__( 'Apply SEO', 'beanst-image-optimizer' ) . '</button>';
 				echo '</div>';
 			} else {
-				echo '<span style="color: #46b450;">✓ Optimized for SEO</span>';
+				echo '<span style="color: #46b450;">' . esc_html__( '✓ Optimized for SEO', 'beanst-image-optimizer' ) . '</span>';
 			}
 		}
 	}
@@ -344,19 +371,19 @@ class BeanST_Admin {
 		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'Unauthorized' );
+			wp_send_json_error( __( 'Unauthorized', 'beanst-image-optimizer' ) );
 		}
 
 		$id = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
 		if ( ! $id ) {
-			wp_send_json_error( 'Invalid ID' );
+			wp_send_json_error( __( 'Invalid ID', 'beanst-image-optimizer' ) );
 		}
 
 		$seo = new BeanST_SEO();
 		if ( $seo->apply_changes( $id ) ) {
-			wp_send_json_success( 'SEO Applied' );
+			wp_send_json_success( __( 'SEO Applied', 'beanst-image-optimizer' ) );
 		} else {
-			wp_send_json_error( 'Failed to apply SEO' );
+			wp_send_json_error( __( 'Failed to apply SEO', 'beanst-image-optimizer' ) );
 		}
 	}
 
@@ -364,17 +391,17 @@ class BeanST_Admin {
 		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'Unauthorized' );
+			wp_send_json_error( __( 'Unauthorized', 'beanst-image-optimizer' ) );
 		}
 
 		$id = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
 		if ( ! $id ) {
-			wp_send_json_error( 'Invalid ID' );
+			wp_send_json_error( __( 'Invalid ID', 'beanst-image-optimizer' ) );
 		}
 
 		$file = get_attached_file( $id );
 		if ( ! $file || ! file_exists( $file ) ) {
-			wp_send_json_error( 'File not found' );
+			wp_send_json_error( __( 'File not found', 'beanst-image-optimizer' ) );
 		}
 
 		$original_url = wp_get_attachment_url( $id );
@@ -403,7 +430,7 @@ class BeanST_Admin {
 		}
 
 		if ( ! $optimized_url ) {
-			wp_send_json_error( 'Optimized version not found' );
+			wp_send_json_error( __( 'Optimized version not found', 'beanst-image-optimizer' ) );
 		}
 
 		wp_send_json_success( array(
@@ -416,12 +443,12 @@ class BeanST_Admin {
 		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'Unauthorized' );
+			wp_send_json_error( __( 'Unauthorized', 'beanst-image-optimizer' ) );
 		}
 
 		$files_to_delete = isset( $_POST['files'] ) ? (array) $_POST['files'] : array();
 		if ( empty( $files_to_delete ) ) {
-			wp_send_json_error( 'No files selected' );
+			wp_send_json_error( __( 'No files selected', 'beanst-image-optimizer' ) );
 		}
 
 		$scanner = new BeanST_Scanner();
@@ -473,11 +500,11 @@ class BeanST_Admin {
 		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( 'Insufficient permissions' );
+			wp_send_json_error( __( 'Insufficient permissions', 'beanst-image-optimizer' ) );
 		}
 
 		if ( ! isset( $_POST['option'] ) || ! isset( $_POST['value'] ) ) {
-			wp_send_json_error( 'Missing parameters' );
+			wp_send_json_error( __( 'Missing parameters', 'beanst-image-optimizer' ) );
 		}
 
 		$option = sanitize_text_field( wp_unslash( $_POST['option'] ) );
