@@ -1,6 +1,6 @@
 /* BeanST Optimizer Premium Admin Styles - Namespaced to prevent conflicts */
 
-:root {
+.beanst-optimizer-settings {
   --beanst-primary: #2271b1;
   --beanst-primary-vibrant: #35b0ff;
   --beanst-success: #46b450;
