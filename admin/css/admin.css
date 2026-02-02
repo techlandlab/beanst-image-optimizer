@@ -520,23 +520,33 @@
   font-weight: 900;
   line-height: 1;
   margin-bottom: 8px;
+  color: #fff;
+  /* Default to white */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Improve legibility */
 }
 
 .beanst-stat-number.beanst-highlight {
-  color: #35b0ff;
+  color: #fff;
+  /* Force white for better contrast on blue background */
 }
 
 .beanst-stat-number.beanst-success {
-  color: #81c784;
+  color: #fff;
+  /* Force white for better contrast on blue background */
 }
 
 .beanst-stat-label {
   display: block;
   font-size: 13px;
-  opacity: 0.9;
+  opacity: 1;
+  /* Increase opacity */
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: 600;
+  font-weight: 700;
+  /* Bold labels */
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .beanst-progress-wrapper {
