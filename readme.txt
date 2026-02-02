@@ -14,13 +14,6 @@ Smart local AVIF & WebP converter for WordPress. Zero limits, local processing, 
 
 **BeanST Image Optimizer** is a powerful, locally-hosted image optimization suite designed for performance-obsessed WordPress users. Unlike other plugins, BeanST processes everything on **your** server—no API limits, no monthly credits, and no third-party cloud dependencies.
 
-= 🚀 V2.0 Major Update: UX Revolution =
-We've completely rebuilt the interface to be simpler, faster, and more intuitive for everyone.
-*   **New Dashboard**: See your optimization status at a glance with the new Hero Section.
-*   **Quick Actions**: Auto-optimize, cleanup, and settings accessible via cards.
-*   **Modern Design**: simplified layout inspired by WordPress core aesthetics.
-*   **Better Feedback**: Clear progress bars, helpful tooltips, and no technical jargon.
-
 = Key Features =
 *   **Visual Proof (Comparison Slider)**: Compare original vs optimized images side-by-side.
 *   **PDF Optimization**: Compress large PDF documents locally.
