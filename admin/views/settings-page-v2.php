@@ -225,6 +225,6 @@ if ( $percent === 100 && $total_images > 0 ) {
 	</div>
 
 	<div class="beanst-footer">
-		Created with ❤️ by <a href="https://bean.st">BeanST</a> | Version <?php echo BEANST_VERSION; ?>
+		BeanST Image Optimizer v<?php echo BEANST_VERSION; ?>
 	</div>
 </div>
