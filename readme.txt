@@ -3,12 +3,12 @@ Contributors: techlandlab
 Tags: images, webp, avif, optimization, converter
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-AI-powered AVIF & WebP converter for WordPress. Zero limits, local processing, helps improve Core Web Vitals. Includes PDF compression and Directory Scanning.
+Smart local AVIF & WebP converter for WordPress. Zero limits, local processing, helps improve Core Web Vitals. Includes PDF compression and Directory Scanning.
 
 == Description ==
 
@@ -44,6 +44,10 @@ No. All processing is done locally on your server using PHP extensions (Imagick/
 We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 == Changelog ==
+
+= 2.0.5 =
+*   **Compliance**: Refined plugin description to accurately reflect local algorithmic processing (removed "AI" terminology).
+*   **Tweak**: Updated guidelines compliance for repository submission.
 
 = 2.0.4 =
 *   **Security**: Applied strict escaping output (esc_html, esc_url) to all admin views.
