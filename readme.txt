@@ -3,7 +3,7 @@ Contributors: techlandlab
 Tags: images, webp, avif, optimization, converter
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,10 @@ No. All processing is done locally on your server using PHP extensions (Imagick/
 We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 == Changelog ==
+
+= 2.0.7 =
+*   **Security**: Hardened Admin JS against XSS (replaced string concatenation with standard DOM API).
+*   **Security**: Added `rel="noopener noreferrer"` to all external links.
 
 = 2.0.6 =
 *   **Fix**: Update support links to point to WordPress.org forums.

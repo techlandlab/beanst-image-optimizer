@@ -134,7 +134,13 @@ jQuery(document).ready(function ($) {
 
     function addLogEntry(message, type) {
         const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const $entry = $('<div class="beanst-log-entry ' + type + '"><span>' + time + '</span> <span>' + message + '</span></div>');
+
+        // Secure creation
+        const $entry = $('<div>').addClass('beanst-log-entry ' + type);
+        const $timeSpan = $('<span>').text(time + ' ');
+        const $msgSpan = $('<span>').text(message);
+
+        $entry.append($timeSpan, $msgSpan);
         $logArea.prepend($entry);
 
         if ($logArea.children().length > 10) {
@@ -377,26 +383,26 @@ jQuery(document).ready(function ($) {
     }
 
     function openComparisonModal(data) {
-        const modalHtml = `
-            <div class="beanst-modal-overlay">
-                <div class="beanst-modal-content">
-                    <div class="beanst-modal-header">
-                        <h3>Visual Proof: Original vs Optimized</h3>
-                        <button class="beanst-modal-close">&times;</button>
-                    </div>
-                    <div class="beanst-comparison-container">
-                        <div class="beanst-comparison-label beanst-label-before">Original</div>
-                        <div class="beanst-comparison-label beanst-label-after">Optimized</div>
-                        <img src="${data.original}" alt="Original" class="beanst-image-before">
-                        <img src="${data.optimized}" alt="Optimized" class="beanst-image-after">
-                        <div class="beanst-comparison-handle"></div>
-                        <input type="range" min="0" max="100" value="50" class="beanst-comparison-slider">
-                    </div>
-                </div>
-            </div>
-        `;
+        // Safe DOM creation
+        const $modal = $('<div class="beanst-modal-overlay"></div>');
+        const $content = $('<div class="beanst-modal-content"></div>');
+        const $header = $('<div class="beanst-modal-header"><h3>Visual Proof: Original vs Optimized</h3><button class="beanst-modal-close">&times;</button></div>');
 
-        const $modal = $(modalHtml).appendTo('body');
+        const $container = $('<div class="beanst-comparison-container"></div>');
+        $container.append('<div class="beanst-comparison-label beanst-label-before">Original</div>');
+        $container.append('<div class="beanst-comparison-label beanst-label-after">Optimized</div>');
+
+        // Securely setting attributes
+        const $imgBeforeEl = $('<img>', { src: data.original, alt: 'Original', class: 'beanst-image-before' });
+        const $imgAfterEl = $('<img>', { src: data.optimized, alt: 'Optimized', class: 'beanst-image-after' });
+
+        $container.append($imgBeforeEl, $imgAfterEl);
+        $container.append('<div class="beanst-comparison-handle"></div>');
+        $container.append('<input type="range" min="0" max="100" value="50" class="beanst-comparison-slider">');
+
+        $content.append($header, $container);
+        $modal.append($content);
+        $modal.appendTo('body');
 
         // Use a small timeout to allow for DOM rendering before adding active class for animation
         setTimeout(() => $modal.addClass('beanst-active'), 10);
