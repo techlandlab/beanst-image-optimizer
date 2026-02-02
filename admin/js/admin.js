@@ -1,0 +1,425 @@
+jQuery(document).ready(function ($) {
+    console.log('BeanST Optimizer Admin JS Loaded v1.0.1');
+
+    // Tab Switching - Scoped and Namespaced
+    $(document).on('click', '.beanst-tab-link', function (e) {
+        e.preventDefault();
+        const target = $(this).attr('data-target');
+
+        console.log('Switching to tab:', target);
+
+        $('.beanst-tab-link').removeClass('beanst-active');
+        $(this).addClass('beanst-active');
+
+        $('.beanst-tab-content').removeClass('beanst-active');
+        $('#' + target).addClass('beanst-active');
+    });
+
+    const $bulkBtn = $('#beanst-bulk-convert');
+    const $pauseBtn = $('#beanst-bulk-pause');
+    const $resumeBtn = $('#beanst-bulk-resume');
+    const $progressArea = $('#beanst-bulk-progress');
+    const $progressBar = $progressArea.find('.beanst-progress-fill');
+    const $statusText = $progressArea.find('.beanst-status-text');
+    const $memText = $('#beanst-memory-usage');
+    const $logArea = $('#beanst-bulk-log');
+
+    let totalImages = 0;
+    let processedImages = 0;
+    let imageIds = [];
+    let orphanFiles = []; // Store found orphans
+    let isPaused = false;
+    let isRunning = false;
+
+    $bulkBtn.on('click', function (e) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to optimize all images? This might take a while.')) {
+            startBulkProcess();
+        }
+    });
+
+    $pauseBtn.on('click', function (e) {
+        e.preventDefault();
+        isPaused = true;
+        $pauseBtn.hide();
+        $resumeBtn.show();
+        $statusText.text('Paused. ' + processedImages + ' / ' + totalImages + ' images processed.');
+    });
+
+    $resumeBtn.on('click', function (e) {
+        e.preventDefault();
+        isPaused = false;
+        $resumeBtn.hide();
+        $pauseBtn.show();
+        $statusText.text('Resuming Engine...');
+        processNextBatch();
+    });
+
+    function startBulkProcess() {
+        isRunning = true;
+        isPaused = false;
+        $bulkBtn.hide();
+        $pauseBtn.show();
+        $progressArea.show();
+        $logArea.show().empty();
+        $statusText.text('Initializing systems...');
+
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_get_stats',
+            nonce: beanst_ajax.nonce
+        }, function (response) {
+            if (response.success) {
+                imageIds = response.data.ids;
+                totalImages = response.data.total;
+                processedImages = 0;
+
+                $('#beanst-stat-total').text(totalImages);
+                $('#beanst-stat-optimized').text(response.data.optimized);
+                $('#beanst-stat-savings').text(response.data.savings);
+
+                $statusText.text('Found ' + totalImages + ' images. Launching optimization...');
+                $progressBar.addClass('beanst-animating');
+                processNextBatch();
+            } else {
+                alert('Error fetching image data');
+                resetBulkUI();
+            }
+        });
+    }
+
+    function processNextBatch() {
+        if (isPaused || !isRunning) return;
+
+        if (imageIds.length === 0) {
+            finishProcess();
+            return;
+        }
+
+        const nextId = imageIds.shift();
+        const force = $('#beanst-force-optimize').is(':checked');
+        const delay = parseInt($('.beanst-stats-card').data('delay')) || 0;
+
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_process_batch',
+            nonce: beanst_ajax.nonce,
+            id: nextId,
+            force: force
+        }, function (response) {
+            processedImages++;
+            updateProgress();
+
+            if (response.success) {
+                const filename = response.data.filename || 'Unknown file';
+                addLogEntry(filename, 'beanst-success');
+            } else {
+                addLogEntry('Error: ' + response.data, 'beanst-error');
+            }
+
+            if (response.data && response.data.memory) {
+                $memText.text('MEM: ' + response.data.memory);
+            }
+
+            if (delay > 0) {
+                setTimeout(processNextBatch, delay);
+            } else {
+                processNextBatch();
+            }
+        }).fail(function () {
+            processedImages++;
+            updateProgress();
+            addLogEntry('Critical failure skipping ID: ' + nextId, 'beanst-error');
+            processNextBatch();
+        });
+    }
+
+    function addLogEntry(message, type) {
+        const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const $entry = $('<div class="beanst-log-entry ' + type + '"><span>' + time + '</span> <span>' + message + '</span></div>');
+        $logArea.prepend($entry);
+
+        if ($logArea.children().length > 10) {
+            $logArea.children().last().remove();
+        }
+    }
+
+    function updateProgress() {
+        const percentage = Math.round((processedImages / totalImages) * 100);
+        $progressBar.css('width', percentage + '%');
+        $statusText.html('Optimizing... <strong>' + processedImages + '</strong> / ' + totalImages + ' (' + percentage + '%)');
+    }
+
+    function finishProcess() {
+        isRunning = false;
+        $progressBar.removeClass('beanst-animating').css('width', '100%');
+        $statusText.text('Optimization Complete! 🎉 All images are now optimized.');
+        $pauseBtn.hide();
+        $bulkBtn.show().text('Optimize Library Again');
+
+        // Final refresh of stats to show new numbers
+        refreshDashboardStats();
+    }
+
+    function resetBulkUI() {
+        isRunning = false;
+        $pauseBtn.hide();
+        $resumeBtn.hide();
+        $bulkBtn.show();
+    }
+
+    // SEO Apply - Keeping IDs and data-attrs specific
+    $(document).on('click', '.beanst-apply-seo', function (e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const id = $btn.data('id');
+        const $container = $btn.closest('.beanst-seo-suggestion');
+
+        $btn.prop('disabled', true).text('Applying...');
+
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_apply_seo',
+            nonce: beanst_ajax.nonce,
+            id: id
+        }, function (response) {
+            if (response.success) {
+                $container.html('<span style="color: #46b450; font-weight: bold;">✓ SEO Optimized</span>');
+            } else {
+                alert('Error: ' + response.data);
+                $btn.prop('disabled', false).text('Apply SEO');
+            }
+        });
+    });
+
+    // Visual Comparison Slider
+    $(document).on('click', '.beanst-compare-link', function (e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        const $link = $(this);
+        const originalText = $link.text();
+
+        $link.text('Loading...').css('pointer-events', 'none');
+
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_get_comparison_data',
+            nonce: beanst_ajax.nonce,
+            id: id
+        }, function (response) {
+            $link.text(originalText).css('pointer-events', 'auto');
+
+            if (response.success) {
+                openComparisonModal(response.data);
+            } else {
+                alert('Error: ' + response.data);
+            }
+        });
+    });
+
+    // --- CLEANUP Maintenance ---
+    $(document).on('click', '#beanst-scan-orphans', function (e) {
+        const $btn = $(this);
+        $btn.addClass('updating').prop('disabled', true).text('Scanning uploads...');
+        $('#beanst-scan-results, #beanst-cleanup-status, #beanst-orphan-preview-container').hide();
+
+        $.ajax({
+            url: beanst_ajax.ajax_url,
+            method: 'POST',
+            data: {
+                action: 'beanst_scan_orphans',
+                nonce: beanst_ajax.nonce
+            },
+            success: function (response) {
+                $btn.removeClass('updating').prop('disabled', false).text('Scan for Orphaned Files');
+                if (response.success) {
+                    orphanFiles = response.data.files;
+                    $('#beanst-orphan-count').text(response.data.count);
+                    $('#beanst-orphan-size').text(response.data.size);
+                    $('#beanst-scan-results').fadeIn();
+                    renderOrphanGrid();
+                } else {
+                    $('#beanst-cleanup-status')
+                        .css({ background: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' })
+                        .text('Error scanning: ' + response.data)
+                        .fadeIn();
+                }
+            },
+            error: function () {
+                $btn.removeClass('updating').prop('disabled', false).text('Scan for Orphaned Files');
+                $('#beanst-cleanup-status')
+                    .css({ background: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' })
+                    .text('An unknown error occurred during scan.')
+                    .fadeIn();
+            }
+        });
+    });
+
+    $(document).on('click', '#beanst-toggle-orphan-preview', function (e) {
+        e.preventDefault();
+        $('#beanst-orphan-preview-container').slideToggle();
+    });
+
+    $(document).on('click', '#beanst-orphan-select-all', function (e) {
+        e.preventDefault();
+        $('.beanst-orphan-check').prop('checked', true);
+    });
+
+    $(document).on('click', '#beanst-orphan-select-none', function (e) {
+        e.preventDefault();
+        $('.beanst-orphan-check').prop('checked', false);
+    });
+
+    function renderOrphanGrid() {
+        const $grid = $('#beanst-orphan-grid');
+        $grid.empty();
+
+        if (orphanFiles.length === 0) {
+            $grid.append('<p style="grid-column: 1/-1; padding: 20px; text-align: center; color: #999;">No orphaned files found.</p>');
+            return;
+        }
+
+        orphanFiles.forEach((file, index) => {
+            const isImage = /\.(webp|avif|jpg|jpeg|png)$/i.test(file.name);
+            const thumb = isImage ? `<img src="${file.url}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px;">` : `<div style="height: 80px; display: flex; align-items: center; justify-content: center; background: #eee; border-radius: 6px; font-weight: bold; font-size: 10px;">PDF</div>`;
+
+            const itemHtml = `
+                <div class="beanst-orphan-item" style="position: relative; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ddd; text-align: center;">
+                    <input type="checkbox" class="beanst-orphan-check" value="${file.path}" checked style="position: absolute; top: 5px; right: 5px; z-index: 5;">
+                    ${thumb}
+                    <div style="font-size: 9px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #666;" title="${file.name}">${file.name}</div>
+                    <div style="font-size: 8px; color: #999;">${file.size}</div>
+                </div>
+            `;
+            $grid.append(itemHtml);
+        });
+    }
+
+    $(document).on('click', '#beanst-delete-orphans', function (e) {
+        const selectedFiles = $('.beanst-orphan-check:checked').map(function () { return $(this).val(); }).get();
+
+        if (selectedFiles.length === 0) {
+            alert('Please select at least one file to delete.');
+            return;
+        }
+
+        if (!confirm('Are you sure you want to delete ' + selectedFiles.length + ' selected files? This cannot be undone.')) {
+            return;
+        }
+
+        const $btn = $(this);
+        $btn.prop('disabled', true).text('Deleting...');
+        $('#beanst-cleanup-status').hide();
+
+        $.ajax({
+            url: beanst_ajax.ajax_url,
+            method: 'POST',
+            data: {
+                action: 'beanst_delete_orphans',
+                nonce: beanst_ajax.nonce,
+                files: selectedFiles
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#beanst-orphan-preview-container').hide();
+                    $('#beanst-scan-results').hide();
+                    $('#beanst-cleanup-status')
+                        .css({ background: '#e7f9ed', color: '#1e7e34', border: '1px solid #c3e6cb' })
+                        .text('Success! Cleaned ' + response.data.count + ' files, freed ' + response.data.freed + ' space.')
+                        .fadeIn();
+
+                    refreshDashboardStats();
+                } else {
+                    $('#beanst-cleanup-status')
+                        .css({ background: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' })
+                        .text('Error deleting: ' + response.data)
+                        .fadeIn();
+                }
+                $btn.prop('disabled', false).text('Clear Selected');
+            },
+            error: function () {
+                $btn.prop('disabled', false).text('Clear Selected');
+                $('#beanst-cleanup-status')
+                    .css({ background: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' })
+                    .text('An unknown error occurred during deletion.')
+                    .fadeIn();
+            }
+        });
+    });
+
+    function refreshDashboardStats() {
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_get_stats',
+            nonce: beanst_ajax.nonce
+        }, function (response) {
+            if (response.success) {
+                $('#beanst-stat-total').text(response.data.total);
+                $('#beanst-stat-optimized').text(response.data.optimized);
+                $('#beanst-stat-savings').text(response.data.savings);
+
+                // SEO Audit Refresh
+                if (response.data.seo_score !== undefined) {
+                    $('#beanst-seo-score').text(response.data.seo_score);
+                    $('#beanst-bad-names-count').text(response.data.bad_names);
+                    $('#beanst-missing-alt-count').text(response.data.missing_alt);
+
+                    // Dynamic Color for Score
+                    const score = response.data.seo_score;
+                    const $badge = $('#beanst-seo-score-badge');
+                    if (score < 50) {
+                        $badge.css({ background: '#fff0f0', color: '#d63384' });
+                    } else if (score < 85) {
+                        $badge.css({ background: '#fff9e6', color: '#856404' });
+                    } else {
+                        $badge.css({ background: '#e7f9ed', color: '#1e7e34' });
+                    }
+                }
+            } else {
+                console.error('Failed to refresh dashboard stats:', response.data);
+            }
+        });
+    }
+
+    function openComparisonModal(data) {
+        const modalHtml = `
+            <div class="beanst-modal-overlay">
+                <div class="beanst-modal-content">
+                    <div class="beanst-modal-header">
+                        <h3>Visual Proof: Original vs Optimized</h3>
+                        <button class="beanst-modal-close">&times;</button>
+                    </div>
+                    <div class="beanst-comparison-container">
+                        <div class="beanst-comparison-label beanst-label-before">Original</div>
+                        <div class="beanst-comparison-label beanst-label-after">Optimized</div>
+                        <img src="${data.original}" alt="Original" class="beanst-image-before">
+                        <img src="${data.optimized}" alt="Optimized" class="beanst-image-after">
+                        <div class="beanst-comparison-handle"></div>
+                        <input type="range" min="0" max="100" value="50" class="beanst-comparison-slider">
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const $modal = $(modalHtml).appendTo('body');
+
+        // Use a small timeout to allow for DOM rendering before adding active class for animation
+        setTimeout(() => $modal.addClass('beanst-active'), 10);
+
+        const $slider = $modal.find('.beanst-comparison-slider');
+        const $imgAfter = $modal.find('.beanst-image-after');
+        const $handle = $modal.find('.beanst-comparison-handle');
+
+        $slider.on('input', function () {
+            const val = $(this).val();
+            $imgAfter.css('clip-path', `inset(0 0 0 ${val}%)`);
+            $handle.css('left', `${val}%`);
+        });
+
+        // Close logic
+        const closeModal = () => {
+            $modal.removeClass('beanst-active');
+            setTimeout(() => $modal.remove(), 300);
+        };
+
+        $modal.find('.beanst-modal-close').on('click', closeModal);
+        $modal.on('click', function (e) {
+            if ($(e.target).hasClass('beanst-modal-overlay')) closeModal();
+        });
+    }
+});

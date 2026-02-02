@@ -1,0 +1,15 @@
+/* BeanST Image Optimizer - Frontend LQIP Styles */
+
+.beanst-lqip {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    will-change: filter;
+}
+
+/* Ensure the background placeholder is visible while the main image is loading */
+img.beanst-lqip:not([src]),
+img.beanst-lqip[src=""] {
+    min-height: 100px;
+    background-color: #f0f0f1;
+}

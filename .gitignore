@@ -1,0 +1,9 @@
+node_modules/
+vendor/
+*.log
+temp-*/
+.vscode/
+.idea/
+*.tmp
+# Allow our release zip
+!beanst-image-optimizer-v1.1.1.zip
