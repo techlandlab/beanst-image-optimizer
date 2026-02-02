@@ -3,7 +3,7 @@ Contributors: techlandlab
 Tags: images, webp, avif, optimization, converter
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,11 @@ No. All processing is done locally on your server using PHP extensions (Imagick/
 We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 == Changelog ==
+
+= 2.0.9 =
+* Cleanup: Removed legacy settings template.
+* Maintenance: Verified uninstall procedures.
+* Tweak: Documentation updates for data handling.
 
 = 2.0.8 =
 *   **Style**: Isolated CSS variables to plugin scope to prevent conflicts with other admin styles.
