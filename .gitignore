@@ -6,4 +6,4 @@ temp-*/
 .idea/
 *.tmp
 # Allow our release zip
-!beanst-image-optimizer-v1.1.1.zip
+!beanst-image-optimizer-v2.0.0.zip

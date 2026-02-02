@@ -464,6 +464,464 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* ========================================
+   V2 UX IMPROVEMENTS - SIMPLIFIED LAYOUT
+   ======================================== */
+
+/* Hero Section */
+.beanst-hero-section {
+  background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 40px;
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(34, 113, 177, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.beanst-hero-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.beanst-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.beanst-hero-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 24px 0;
+  color: #fff;
+}
+
+.beanst-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.beanst-stat-item {
+  text-align: center;
+}
+
+.beanst-stat-number {
+  display: block;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.beanst-stat-number.beanst-highlight {
+  color: #35b0ff;
+}
+
+.beanst-stat-number.beanst-success {
+  color: #81c784;
+}
+
+.beanst-stat-label {
+  display: block;
+  font-size: 13px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.beanst-progress-wrapper {
+  margin-bottom: 32px;
+}
+
+.beanst-progress-bar-hero {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.beanst-progress-fill-hero {
+  height: 100%;
+  background: linear-gradient(90deg, #81c784 0%, #66bb6a 100%);
+  border-radius: 6px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(129, 199, 132, 0.5);
+}
+
+.beanst-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  opacity: 0.95;
+  font-weight: 600;
+}
+
+.beanst-hero-cta {
+  background: #fff !important;
+  color: #2271b1 !important;
+  border: none !important;
+  padding: 16px 40px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  border-radius: 30px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+  text-transform: none !important;
+  height: auto !important;
+}
+
+.beanst-hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2) !important;
+  background: #f8f9fa !important;
+}
+
+.beanst-success-message {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.beanst-success-message .dashicons {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Section Layout */
+.beanst-section {
+  margin-bottom: 48px;
+}
+
+.beanst-section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  color: var(--beanst-text-main);
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e5e5e5;
+}
+
+/* Action Cards */
+.beanst-action-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.beanst-action-card {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.beanst-action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.beanst-action-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.beanst-action-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: var(--beanst-text-main);
+}
+
+.beanst-action-card p {
+  font-size: 14px;
+  color: var(--beanst-text-muted);
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+}
+
+/* Toggle Switch */
+.beanst-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.beanst-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.beanst-toggle-slider {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  background: #ccc;
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+
+.beanst-toggle-slider::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.beanst-toggle input:checked+.beanst-toggle-slider {
+  background: var(--beanst-success);
+}
+
+.beanst-toggle input:checked+.beanst-toggle-slider::after {
+  transform: translateX(24px);
+}
+
+.beanst-toggle-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--beanst-text-main);
+}
+
+/* Checkbox Labels */
+.beanst-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(34, 113, 177, 0.04);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.beanst-checkbox-label:hover {
+  background: rgba(34, 113, 177, 0.08);
+}
+
+.beanst-checkbox-label input[type="checkbox"] {
+  margin: 0;
+  transform: scale(1.2);
+}
+
+.beanst-checkbox-label span {
+  font-weight: 600;
+  color: var(--beanst-text-main);
+}
+
+/* Help Tooltip */
+.beanst-help-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--beanst-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 8px;
+  position: relative;
+}
+
+.beanst-help-tip:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1d2327;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.beanst-help-tip:hover::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1d2327;
+  margin-bottom: 2px;
+}
+
+/* Bulk Options */
+.beanst-bulk-options {
+  margin-bottom: 24px;
+}
+
+/* Card Description */
+.beanst-card-description {
+  font-size: 15px;
+  color: var(--beanst-text-muted);
+  margin: 0 0 24px 0;
+  line-height: 1.6;
+}
+
+/* SEO Section */
+.beanst-seo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.beanst-seo-header p {
+  margin: 0;
+  color: var(--beanst-text-muted);
+  flex: 1;
+}
+
+.beanst-seo-score-badge {
+  background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(34, 113, 177, 0.3);
+}
+
+.beanst-seo-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.beanst-seo-metric {
+  text-align: center;
+  padding: 24px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  border-left: 4px solid #d63638;
+}
+
+.beanst-seo-metric-value {
+  font-size: 36px;
+  font-weight: 900;
+  color: #d63638;
+  margin-bottom: 8px;
+}
+
+.beanst-seo-metric-label {
+  font-size: 13px;
+  color: var(--beanst-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.beanst-seo-help {
+  padding: 16px;
+  background: #f0f6fc;
+  border-left: 4px solid var(--beanst-primary);
+  border-radius: 6px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.beanst-seo-help a {
+  color: var(--beanst-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.beanst-seo-help a:hover {
+  text-decoration: underline;
+}
+
+/* Help Grid */
+.beanst-help-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.beanst-help-card {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.beanst-help-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.beanst-help-card p {
+  font-size: 14px;
+  color: var(--beanst-text-muted);
+  margin: 0 0 20px 0;
+}
+
+/* Footer */
+.beanst-footer {
+  text-align: center;
+  padding: 24px 0;
+  border-top: 1px solid #e5e5e5;
+  color: var(--beanst-text-muted);
+  font-size: 13px;
+}
+
+/* Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+.beanst-scroll-to {
+  cursor: pointer;
+}
+
+/* Cleanup Results */
+.beanst-cleanup-summary {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
 /* Responsive */
 @media (max-width: 782px) {
   .beanst-dashboard-grid {
@@ -473,5 +931,23 @@
   .beanst-modal-content {
     width: 95%;
     height: auto;
+  }
+
+  .beanst-hero-section {
+    padding: 32px 24px;
+  }
+
+  .beanst-hero-stats {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .beanst-action-cards,
+  .beanst-help-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .beanst-seo-metrics {
+    grid-template-columns: 1fr;
   }
 }

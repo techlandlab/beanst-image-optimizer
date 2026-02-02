@@ -22,6 +22,9 @@ class BeanST_Admin {
 		// Cleanup Actions
 		add_action( 'wp_ajax_beanst_scan_orphans', array( $this, 'ajax_scan_orphans' ) );
 		add_action( 'wp_ajax_beanst_delete_orphans', array( $this, 'ajax_delete_orphans' ) );
+		
+		// V2 UX Actions
+		add_action( 'wp_ajax_beanst_update_option', array( $this, 'ajax_update_option' ) );
 	}
 
 	public function add_admin_menu() {
@@ -253,8 +256,8 @@ class BeanST_Admin {
 	}
 
 	public function render_settings_page() {
-		// Load view from protected file
-		include BEANST_PLUGIN_DIR . 'admin/views/settings-page.php';
+		// Load V2 view with simplified UX
+		include BEANST_PLUGIN_DIR . 'admin/views/settings-page-v2.php';
 	}
 
 	public function render_checkbox_field( $args ) {
@@ -463,6 +466,35 @@ class BeanST_Admin {
 			'count' => count( $orphans ),
 			'size'  => size_format( $total_size, 2 ),
 			'files' => $data
+		) );
+	}
+
+	public function ajax_update_option() {
+		check_ajax_referer( 'beanst_bulk_action', 'nonce' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Insufficient permissions' );
+		}
+
+		if ( ! isset( $_POST['option'] ) || ! isset( $_POST['value'] ) ) {
+			wp_send_json_error( 'Missing parameters' );
+		}
+
+		$option = sanitize_text_field( wp_unslash( $_POST['option'] ) );
+		$value  = sanitize_text_field( wp_unslash( $_POST['value'] ) );
+
+		// Get current options
+		$options = get_option( 'beanst_options', array() );
+
+		// Update specific option
+		$options[ $option ] = $value;
+
+		// Save updated options
+		update_option( 'beanst_options', $options );
+
+		wp_send_json_success( array(
+			'option' => $option,
+			'value'  => $value
 		) );
 	}
 }

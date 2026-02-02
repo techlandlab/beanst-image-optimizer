@@ -422,4 +422,90 @@ jQuery(document).ready(function ($) {
             if ($(e.target).hasClass('beanst-modal-overlay')) closeModal();
         });
     }
+
+    // ========================================
+    // V2 UX IMPROVEMENTS - NEW INTERACTIONS
+    // ========================================
+
+    // Auto-Convert Toggle Switch
+    $('#beanst-auto-convert-toggle').on('change', function () {
+        const isEnabled = $(this).is(':checked');
+        const $label = $(this).siblings('.beanst-toggle-label');
+
+        $label.text(isEnabled ? 'Enabled' : 'Disabled');
+
+        // Save setting via AJAX
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_update_option',
+            nonce: beanst_ajax.nonce,
+            option: 'auto_convert',
+            value: isEnabled ? '1' : '0'
+        }, function (response) {
+            if (response.success) {
+                // Show brief success feedback
+                $label.css('color', '#46b450');
+                setTimeout(() => $label.css('color', ''), 1000);
+            }
+        });
+    });
+
+    // Hero CTA Button - Scroll to bulk section
+    $('#beanst-hero-optimize').on('click', function (e) {
+        e.preventDefault();
+
+        // Smooth scroll to bulk section
+        $('html, body').animate({
+            scrollTop: $('#beanst-bulk-section').offset().top - 50
+        }, 600);
+
+        // Auto-click bulk button after scroll
+        setTimeout(() => {
+            $('#beanst-bulk-convert').trigger('click');
+        }, 700);
+    });
+
+    // Smooth scroll for internal links
+    $('.beanst-scroll-to').on('click', function (e) {
+        e.preventDefault();
+        const target = $(this).attr('href');
+
+        if (target && target.startsWith('#')) {
+            $('html, body').animate({
+                scrollTop: $(target).offset().top - 50
+            }, 600);
+        }
+    });
+
+    // Scan Orphans Button (new ID for V2)
+    $('#beanst-scan-orphans-btn').on('click', function (e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const $results = $('#beanst-cleanup-results');
+
+        $btn.prop('disabled', true).text('Scanning...');
+        $results.hide();
+
+        $.post(beanst_ajax.ajax_url, {
+            action: 'beanst_scan_orphans',
+            nonce: beanst_ajax.nonce
+        }, function (response) {
+            $btn.prop('disabled', false).text('Scan for Unused Files');
+
+            if (response.success) {
+                orphanFiles = response.data.files;
+                $('#beanst-orphan-count').text(response.data.count);
+                $('#beanst-orphan-size').text(response.data.size);
+                $results.fadeIn();
+            } else {
+                alert('Error scanning: ' + response.data);
+            }
+        });
+    });
+
+    // Update toggle label on page load
+    if ($('#beanst-auto-convert-toggle').is(':checked')) {
+        $('#beanst-auto-convert-toggle').siblings('.beanst-toggle-label').text('Enabled');
+    } else {
+        $('#beanst-auto-convert-toggle').siblings('.beanst-toggle-label').text('Disabled');
+    }
 });
