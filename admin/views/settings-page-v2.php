@@ -212,14 +212,14 @@ if ( $percent === 100 && $total_images > 0 ) {
 			<div class="beanst-help-card">
 				<span class="dashicons dashicons-format-chat"></span>
 				<h3>Support</h3>
-				<p>Need help? Ask us.</p>
-				<a href="https://bean.st/support" target="_blank">Get Support</a>
+				<p>Need help? Ask on the forums.</p>
+				<a href="https://wordpress.org/support/plugin/beanst-image-optimizer/" target="_blank">Get Support</a>
 			</div>
 			<div class="beanst-help-card">
 				<span class="dashicons dashicons-star-filled"></span>
 				<h3>Rate Us</h3>
 				<p>Love it? Review us.</p>
-				<a href="#" target="_blank">Leave Review</a>
+				<a href="https://wordpress.org/support/plugin/beanst-image-optimizer/reviews/" target="_blank">Leave Review</a>
 			</div>
 		</div>
 	</div>
