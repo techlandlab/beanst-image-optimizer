@@ -254,9 +254,11 @@ class BeanST_Admin {
 			'nonce'    => wp_create_nonce( 'beanst_bulk_action' ),
 			'i18n'     => array(
 				'confirm_optimize_all' => __( 'Are you sure you want to optimize all images? This might take a while.', 'beanst-image-optimizer' ),
+				/* translators: 1: number of processed images, 2: total number of images */
 				'paused_status'        => __( 'Paused. %1$s / %2$s images processed.', 'beanst-image-optimizer' ),
 				'resuming'             => __( 'Resuming Engine...', 'beanst-image-optimizer' ),
 				'initializing'         => __( 'Initializing systems...', 'beanst-image-optimizer' ),
+				/* translators: %s: number of images found */
 				'found_images'         => __( 'Found %s images. Launching optimization...', 'beanst-image-optimizer' ),
 				'error_fetching'       => __( 'Error fetching image data', 'beanst-image-optimizer' ),
 				'unknown_file'         => __( 'Unknown file', 'beanst-image-optimizer' ),
@@ -271,10 +273,12 @@ class BeanST_Admin {
 				'unknown_error'        => __( 'An unknown error occurred.', 'beanst-image-optimizer' ),
 				'no_orphans'           => __( 'No orphaned files found.', 'beanst-image-optimizer' ),
 				'select_one_delete'    => __( 'Please select at least one file to delete.', 'beanst-image-optimizer' ),
+				/* translators: %s: number of files to delete */
 				'confirm_delete'       => __( 'Are you sure you want to delete %s selected files? This cannot be undone.', 'beanst-image-optimizer' ),
 				'deleting'             => __( 'Deleting...', 'beanst-image-optimizer' ),
 				'error_deleting'       => __( 'Error deleting: ', 'beanst-image-optimizer' ),
 				'clear_selected'       => __( 'Clear Selected', 'beanst-image-optimizer' ),
+				/* translators: 1: number of files cleaned, 2: amount of space freed */
 				'success_cleaned'      => __( 'Success! Cleaned %1$s files, freed %2$s space.', 'beanst-image-optimizer' ),
 				'enabled'              => __( 'Enabled', 'beanst-image-optimizer' ),
 				'disabled'             => __( 'Disabled', 'beanst-image-optimizer' )
@@ -338,7 +342,8 @@ class BeanST_Admin {
 			$stats = BeanST_Stats::get_attachment_stats( $id );
 			if ( $stats['is_optimized'] ) {
 				echo '<span class="beanst-status-ok" style="color: #46b450; font-weight: bold;">' . esc_html__( '✓ Optimized', 'beanst-image-optimizer' ) . '</span>';
-				echo '<br><small>' . sprintf( __( 'Saved: %s%% (%s)', 'beanst-image-optimizer' ), esc_html( $stats['percent'] ), size_format( $stats['savings_bytes'], 1 ) ) . '</small>';
+				/* translators: 1: percentage saved, 2: size saved */
+				echo '<br><small>' . esc_html( sprintf( __( 'Saved: %1$s%% (%2$s)', 'beanst-image-optimizer' ), $stats['percent'], size_format( $stats['savings_bytes'], 1 ) ) ) . '</small>';
 				
 				$mime = get_post_mime_type( $id );
 				if ( strpos( $mime, 'image' ) !== false ) {
@@ -446,7 +451,7 @@ class BeanST_Admin {
 			wp_send_json_error( __( 'Unauthorized', 'beanst-image-optimizer' ) );
 		}
 
-		$files_to_delete = isset( $_POST['files'] ) ? (array) $_POST['files'] : array();
+		$files_to_delete = isset( $_POST['files'] ) ? array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['files'] ) ) : array();
 		if ( empty( $files_to_delete ) ) {
 			wp_send_json_error( __( 'No files selected', 'beanst-image-optimizer' ) );
 		}

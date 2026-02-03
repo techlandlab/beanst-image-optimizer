@@ -73,6 +73,7 @@ class BeanST_Bulk {
 			$full_path = ABSPATH . $rel_path;
 
 			if ( ! file_exists( $full_path ) ) {
+			/* translators: %s: relative path to the file */
 				wp_send_json_error( sprintf( __( 'External file not found: %s', 'beanst-image-optimizer' ), esc_html( $rel_path ) ) );
 			}
 
@@ -96,6 +97,7 @@ class BeanST_Bulk {
 			}
 
 			wp_send_json_success( array(
+			/* translators: %s: relative path to optimized file */
 				'message'  => sprintf( __( 'Optimized External: %s', 'beanst-image-optimizer' ), esc_html( $rel_path ) ),
 				'filename' => basename( $full_path ),
 				'memory'   => $this->get_memory_usage()
@@ -122,11 +124,13 @@ class BeanST_Bulk {
 			$converter->auto_convert_attachment( $metadata, $attachment_id, $force );
 			
 			wp_send_json_success( array(
+			/* translators: %d: attachment ID */
 				'message'  => sprintf( __( 'Processed ID: %d', 'beanst-image-optimizer' ), $attachment_id ),
 				'filename' => basename( get_attached_file( $attachment_id ) ),
 				'memory'   => $this->get_memory_usage()
 			) );
 		} else {
+			/* translators: %d: attachment ID */
 			wp_send_json_error( sprintf( __( 'No metadata for ID: %d', 'beanst-image-optimizer' ), $attachment_id ) );
 		}
 	}

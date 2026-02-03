@@ -8,7 +8,7 @@ Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Smart local AVIF & WebP converter for WordPress. Zero limits, local processing, helps improve Core Web Vitals. Includes PDF compression and Directory Scanning.
+Smart local AVIF & WebP converter. Zero limits, local processing. Improves Core Web Vitals, includes PDF compression.
 
 == Description ==
 

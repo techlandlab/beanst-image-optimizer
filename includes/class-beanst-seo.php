@@ -64,54 +64,64 @@ class BeanST_SEO {
         return true;
     }
 
-    /**
-     * Rename attachment files and update database
-     */
-    private function rename_attachment_files($attachment_id, $new_filename) {
-        $old_path = get_attached_file($attachment_id);
-        if (!$old_path || !file_exists($old_path)) return false;
+    	/**
+	 * Rename attachment files and update database
+	 */
+	private function rename_attachment_files($attachment_id, $new_filename) {
+		global $wp_filesystem;
+		
+		// Initialize WP_Filesystem
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		
+		$old_path = get_attached_file($attachment_id);
+		if (!$old_path || !file_exists($old_path)) return false;
 
-        $old_info = pathinfo($old_path);
-        $dirname  = $old_info['dirname'];
-        $ext      = $old_info['extension'];
-        $new_path = $dirname . '/' . $new_filename . '.' . $ext;
+		$old_info = pathinfo($old_path);
+		$dirname  = $old_info['dirname'];
+		$ext      = $old_info['extension'];
+		$new_path = $dirname . '/' . $new_filename . '.' . $ext;
 
-        if (file_exists($new_path)) {
-            $new_filename .= '-' . time();
-            $new_path = $dirname . '/' . $new_filename . '.' . $ext;
-        }
+		if (file_exists($new_path)) {
+			$new_filename .= '-' . time();
+			$new_path = $dirname . '/' . $new_filename . '.' . $ext;
+		}
 
-        // Rename Main File
-        if (!rename($old_path, $new_path)) return false;
-        update_attached_file($attachment_id, $new_path);
+		// Rename Main File using WP_Filesystem
+		if ( ! $wp_filesystem->move( $old_path, $new_path, true ) ) {
+			return false;
+		}
+		update_attached_file($attachment_id, $new_path);
 
-        // Rename Thumbnails
-        $metadata = wp_get_attachment_metadata($attachment_id);
-        if (isset($metadata['sizes']) && is_array($metadata['sizes'])) {
-            foreach ($metadata['sizes'] as $size => &$size_info) {
-                $old_size_path = $dirname . '/' . $size_info['file'];
-                if (file_exists($old_size_path)) {
-                    // Try to keep dimensions in name
-                    $size_ext = pathinfo($size_info['file'], PATHINFO_EXTENSION);
-                    $new_size_file = $new_filename . '-' . $size_info['width'] . 'x' . $size_info['height'] . '.' . $size_ext;
-                    $new_size_path = $dirname . '/' . $new_size_file;
-                    
-                    if (rename($old_size_path, $new_size_path)) {
-                        $size_info['file'] = $new_size_file;
-                    }
-                }
-            }
-            wp_update_attachment_metadata($attachment_id, $metadata);
-        }
+		// Rename Thumbnails
+		$metadata = wp_get_attachment_metadata($attachment_id);
+		if (isset($metadata['sizes']) && is_array($metadata['sizes'])) {
+			foreach ($metadata['sizes'] as $size => &$size_info) {
+				$old_size_path = $dirname . '/' . $size_info['file'];
+				if (file_exists($old_size_path)) {
+					// Try to keep dimensions in name
+					$size_ext = pathinfo($size_info['file'], PATHINFO_EXTENSION);
+					$new_size_file = $new_filename . '-' . $size_info['width'] . 'x' . $size_info['height'] . '.' . $size_ext;
+					$new_size_path = $dirname . '/' . $new_size_file;
+					
+					if ( $wp_filesystem->move( $old_size_path, $new_size_path, true ) ) {
+						$size_info['file'] = $new_size_file;
+					}
+				}
+			}
+			wp_update_attachment_metadata($attachment_id, $metadata);
+		}
 
-        // Update Post Title (Optional but good for SEO)
-        wp_update_post(array(
-            'ID'         => $attachment_id,
-            'post_title' => str_replace('-', ' ', $new_filename)
-        ));
+		// Update Post Title (Optional but good for SEO)
+		wp_update_post(array(
+			'ID'         => $attachment_id,
+			'post_title' => str_replace('-', ' ', $new_filename)
+		));
 
-        return true;
-    }
+		return true;
+	}    
 
     /**
      * Get aggregate SEO health stats for the entire media library

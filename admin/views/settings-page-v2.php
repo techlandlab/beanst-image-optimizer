@@ -31,20 +31,20 @@ if ( $percent === 100 && $total_images > 0 ) {
 ?>
 
 <div class="wrap beanst-optimizer-settings">
-	<h1>BeanST Image Optimizer <span class="beanst-version">v<?php echo BEANST_VERSION; ?></span></h1>
+	<h1>BeanST Image Optimizer <span class="beanst-version">v<?php echo esc_html( BEANST_VERSION ); ?></span></h1>
 
 	<!-- HERO SECTION -->
-	<div class="beanst-hero-section <?php echo $hero_class; ?>">
+	<div class="beanst-hero-section <?php echo esc_attr( $hero_class ); ?>">
 		<div class="beanst-hero-content">
 			<h2 class="beanst-hero-title"><?php echo esc_html( $hero_title ); ?></h2>
 			
 			<div class="beanst-hero-stats">
 				<div class="beanst-stat-item">
-					<span class="beanst-stat-number"><?php echo number_format_i18n( $total_images ); ?></span>
+					<span class="beanst-stat-number"><?php echo esc_html( number_format_i18n( $total_images ) ); ?></span>
 					<span class="beanst-stat-label"><?php esc_html_e( 'Total Images', 'beanst-image-optimizer' ); ?></span>
 				</div>
 				<div class="beanst-stat-item">
-					<span class="beanst-stat-number beanst-success"><?php echo number_format_i18n( $optimized ); ?></span>
+					<span class="beanst-stat-number beanst-success"><?php echo esc_html( number_format_i18n( $optimized ) ); ?></span>
 					<span class="beanst-stat-label"><?php esc_html_e( 'Optimized', 'beanst-image-optimizer' ); ?></span>
 				</div>
 				<div class="beanst-stat-item">
@@ -65,7 +65,10 @@ if ( $percent === 100 && $total_images > 0 ) {
 
 			<?php if ( $remaining > 0 ) : ?>
 				<button id="beanst-hero-optimize" class="button button-primary beanst-hero-cta">
-					<?php printf( esc_html__( 'Optimize %d Remaining Images &rarr;', 'beanst-image-optimizer' ), esc_html( $remaining ) ); ?>
+					<?php
+					/* translators: %d: number of remaining images to optimize */
+					printf( esc_html__( 'Optimize %d Remaining Images &rarr;', 'beanst-image-optimizer' ), esc_html( $remaining ) );
+					?>
 				</button>
 			<?php else : ?>
 				<div class="beanst-success-message">
@@ -117,7 +120,10 @@ if ( $percent === 100 && $total_images > 0 ) {
         <div class="beanst-stats-card">
              <h3><?php esc_html_e( '🧹 Scan Results', 'beanst-image-optimizer' ); ?></h3>
              <p class="beanst-cleanup-summary">
-                <?php printf( esc_html__( 'Found %s unused files taking up %s.', 'beanst-image-optimizer' ), '<span id="beanst-orphan-count" class="beanst-highlight">0</span>', '<span id="beanst-orphan-size" class="beanst-highlight">0 MB</span>' ); ?>
+				 <?php
+				 /* translators: 1: number of unused files, 2: size of unused files */
+				 printf( esc_html__( 'Found %1$s unused files taking up %2$s.', 'beanst-image-optimizer' ), '<span id="beanst-orphan-count" class="beanst-highlight">0</span>', '<span id="beanst-orphan-size" class="beanst-highlight">0 MB</span>' );
+				 ?>
              </p>
              <div id="beanst-orphan-grid" style="max-height: 200px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin: 15px 0;">
                 <!-- Populated via JS -->
@@ -181,7 +187,10 @@ if ( $percent === 100 && $total_images > 0 ) {
 			</div>
 			
 			<p class="beanst-seo-help">
-				💡 <strong><?php esc_html_e( 'Quick Fix:', 'beanst-image-optimizer' ); ?></strong> <?php printf( wp_kses_post( __( 'Visit your <a href="%s">Media Library</a> and look for the "SEO Review" column to fix these issues.', 'beanst-image-optimizer' ) ), esc_url( admin_url('upload.php?mode=list') ) ); ?>
+				💡 <strong><?php esc_html_e( 'Quick Fix:', 'beanst-image-optimizer' ); ?></strong> <?php
+				/* translators: %s: URL to WordPress Media Library */
+				printf( wp_kses_post( __( 'Visit your <a href="%s">Media Library</a> and look for the "SEO Review" column to fix these issues.', 'beanst-image-optimizer' ) ), esc_url( admin_url('upload.php?mode=list') ) );
+				?>
 			</p>
 		</div>
 	</div>
@@ -224,6 +233,6 @@ if ( $percent === 100 && $total_images > 0 ) {
 	</div>
 
 	<div class="beanst-footer">
-		BeanST Image Optimizer v<?php echo BEANST_VERSION; ?>
+		BeanST Image Optimizer v<?php echo esc_html( BEANST_VERSION ); ?>
 	</div>
 </div>
