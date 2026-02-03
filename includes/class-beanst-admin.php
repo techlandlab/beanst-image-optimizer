@@ -110,15 +110,6 @@ class BeanST_Admin {
 		);
 
 		add_settings_field(
-			'pdf_optimization',
-			__( 'PDF Optimization', 'beanst-image-optimizer' ),
-			array( $this, 'render_checkbox_field' ),
-			'beanst-image-optimizer',
-			'beanst_main_section',
-			array( 'key' => 'pdf_optimization', 'label' => __( 'Compress PDF documents in the Media Library', 'beanst-image-optimizer' ) )
-		);
-
-		add_settings_field(
 			'scan_paths',
 			__( 'Directory Janitor (Scan Paths)', 'beanst-image-optimizer' ),
 			array( $this, 'render_textarea_field' ),
@@ -197,12 +188,6 @@ class BeanST_Admin {
 			$sanitized['keep_backups'] = '1';
 		} else {
 			$sanitized['keep_backups'] = '0';
-		}
-
-		if ( isset( $input['pdf_optimization'] ) ) {
-			$sanitized['pdf_optimization'] = '1';
-		} else {
-			$sanitized['pdf_optimization'] = '0';
 		}
 
 		if ( isset( $input['scan_paths'] ) ) {

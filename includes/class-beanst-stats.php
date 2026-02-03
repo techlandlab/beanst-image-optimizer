@@ -12,9 +12,9 @@ class BeanST_Stats {
         $query = new WP_Query(array(
             'post_type'      => 'attachment',
             'post_status'    => 'inherit',
-            'post_mime_type' => array('image', 'application/pdf'),
+            'post_mime_type' => 'image',
             'posts_per_page' => -1,
-            'fields'         => 'ids',
+            'fields'         => 'ids'
         ));
 
         $total_count = $query->found_posts;
@@ -55,7 +55,7 @@ class BeanST_Stats {
         $savings = 0;
 
         if ($is_optimized) {
-            // For images, the WebP/AVIF might be smaller. For PDFs, the original was replaced.
+            // The WebP/AVIF might be smaller than original
             $info = pathinfo($file);
             $dir = $info['dirname'];
             $name = $info['filename'];
@@ -76,8 +76,7 @@ class BeanST_Stats {
             $optimized_size = $best_opt_size;
             $savings = ($orig_size > $optimized_size) ? ($orig_size - $optimized_size) : 0;
             
-            // Special case for PDFs (where the original is actually the optimized one now)
-            // Note: Currently we don't store original size for PDFs before optimization. 
+
             // In V3 we could add '_beanst_original_size' meta.
         }
 

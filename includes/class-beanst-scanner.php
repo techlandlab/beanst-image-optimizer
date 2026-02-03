@@ -39,7 +39,7 @@ class BeanST_Scanner {
 		}
 
 		$found_files = array();
-		$extensions = array( 'jpg', 'jpeg', 'png', 'pdf' );
+		$extensions = array( 'jpg', 'jpeg', 'png' );
 
 		foreach ( $scan_dirs as $dir ) {
 			$this->recursive_scan( $dir, $extensions, $found_files );
@@ -135,9 +135,6 @@ class BeanST_Scanner {
 					$images_in_dir[] = $name;
 				} elseif ( in_array( $ext, array( 'webp', 'avif' ) ) ) {
 					$opt_files[] = array( 'name' => $name, 'path' => $full_path );
-				} elseif ( $ext === 'pdf' && strpos( $item, '.tmp.pdf' ) !== false ) {
-					// Abandoned PDF temp files
-					$orphans[] = $full_path;
 				}
 			}
 		}

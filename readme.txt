@@ -8,7 +8,7 @@ Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Smart local AVIF & WebP converter. Zero limits, local processing. Improves Core Web Vitals, includes PDF compression.
+Smart local AVIF & WebP converter. Zero limits, local processing. Improves Core Web Vitals and page speed.
 
 == Description ==
 
@@ -16,7 +16,6 @@ Smart local AVIF & WebP converter. Zero limits, local processing. Improves Core 
 
 = Key Features =
 *   **Visual Proof (Comparison Slider)**: Compare original vs optimized images side-by-side.
-*   **PDF Optimization**: Compress large PDF documents locally.
 *   **Directory Janitor**: Optimize images in theme folders or custom uploads.
 *   **Smart HEIC Support**: Automatic conversion of iPhone (HEIC) uploads to JPEG.
 *   **Unlimited Conversion**: No API limits, 100% local processing.
@@ -31,7 +30,7 @@ Smart local AVIF & WebP converter. Zero limits, local processing. Improves Core 
 == Frequently Asked Questions ==
 
 = Does this require an API key? =
-No. All processing is done locally on your server using PHP extensions (Imagick/GD) or system tools (Ghostscript).
+No. All processing is done locally on your server using PHP extensions (Imagick/GD).
 
 = What are the server requirements? =
 We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.

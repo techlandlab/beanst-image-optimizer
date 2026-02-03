@@ -33,12 +33,8 @@ class BeanST_Converter {
 
 		$mime = get_post_mime_type( $attachment_id );
 
-		// Process PDF if enabled
-		if ( $mime === 'application/pdf' ) {
-			$pdf_opt = isset( $options['pdf_optimization'] ) ? $options['pdf_optimization'] : '0';
-			if ( $pdf_opt || $force ) {
-				$this->optimize_pdf( $file );
-			}
+		// Only process images
+		if ( strpos( $mime, 'image/' ) !== 0 ) {
 			return $metadata;
 		}
 
@@ -61,15 +57,13 @@ class BeanST_Converter {
 	}
 
 	/**
-	 * Process a single image or PDF file
+	 * Process a single image file
 	 */
-	public function process_image( $file_path, $id, $force = false ) {
+	public function process_image( $file_path, $id = 0, $force = false ) {
+		if ( ! file_exists( $file_path ) ) return;
+
 		$options = get_option( 'beanst_options', array() );
 		$ext = strtolower( pathinfo( $file_path, PATHINFO_EXTENSION ) );
-
-		if ( $ext === 'pdf' ) {
-			return $this->optimize_pdf( $file_path, $id );
-		}
 
 		$formats = isset( $options['formats'] ) ? $options['formats'] : array( 'webp' );
 		$quality = isset( $options['quality'] ) ? intval( $options['quality'] ) : 80;
@@ -82,64 +76,6 @@ class BeanST_Converter {
 
 		// Generate LQIP for the original image
 		$this->generate_lqip( $file_path, $id );
-	}
-
-	/**
-	 * Core PDF Optimization using Ghostscript (Primary) or Imagick (Fallback)
-	 */
-	public function optimize_pdf( $file_path, $id ) {
-		if ( ! file_exists( $file_path ) ) return false;
-
-		// Check if it's actually optimized (we use a simple flag in filename? No, let's just use size)
-		$orig_size = filesize( $file_path );
-		$temp_file = $file_path . '.tmp.pdf';
-
-		try {
-			// Method 1: Ghostscript CLI (Most efficient)
-			if ( $this->is_ghostscript_available() ) {
-				// Use 'ebook' profile (150dpi) for a good balance of quality and size
-				$cmd = sprintf(
-					'gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=%s %s',
-					escapeshellarg( $temp_file ),
-					escapeshellarg( $file_path )
-				);
-				exec( $cmd );
-			} 
-			// Method 2: Imagick (Requires Ghostscript delegate anyway)
-			elseif ( extension_loaded( 'imagick' ) && class_exists( 'Imagick' ) ) {
-				$image = new Imagick();
-				$image->setResolution( 150, 150 );
-				$image->readImage( $file_path );
-				$image->setImageFormat( 'pdf' );
-				$image->writeImages( $temp_file, true );
-				$image->clear();
-				$image->destroy();
-			}
-
-			if ( file_exists( $temp_file ) ) {
-				$new_size = filesize( $temp_file );
-				if ( $new_size < $orig_size ) {
-					copy( $temp_file, $file_path );
-					wp_delete_file( $temp_file );
-					update_post_meta( $id, '_beanst_optimized', time() );
-					return true;
-				}
-				wp_delete_file( $temp_file );
-			}
-		} catch ( Exception $e ) {
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Essential for debugging PDF optimization failures
-			error_log( 'BeanST PDF Optimization Error: ' . $e->getMessage() );
-		}
-
-		return false;
-	}
-
-	public function is_ghostscript_available() {
-		if ( ! function_exists( 'exec' ) ) return false;
-		$out = array();
-		$res = -1;
-		exec( 'gs --version', $out, $res );
-		return $res === 0;
 	}
 
 	/**

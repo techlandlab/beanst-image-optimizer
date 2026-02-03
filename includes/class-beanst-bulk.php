@@ -21,7 +21,7 @@ class BeanST_Bulk {
 		$query = new WP_Query( array(
 			'post_type'      => 'attachment',
 			'post_status'    => 'inherit',
-			'post_mime_type' => array('image', 'application/pdf'),
+			'post_mime_type' => 'image',
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
 		) );
@@ -115,7 +115,7 @@ class BeanST_Bulk {
 		$metadata = wp_get_attachment_metadata( $attachment_id );
 		$mime = get_post_mime_type( $attachment_id );
 		
-		if ( $metadata || $mime === 'application/pdf' ) {
+		if ( $metadata && strpos( $mime, 'image/' ) === 0 ) {
 			// Memory Guard: Skip if less than 10MB free (simple heuristic)
 			if ( ! $this->check_memory_safety() ) {
 				wp_send_json_error( __( 'Server memory low. Pausing for safety.', 'beanst-image-optimizer' ) );
