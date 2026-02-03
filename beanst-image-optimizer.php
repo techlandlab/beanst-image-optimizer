@@ -8,7 +8,6 @@
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       beanst-image-optimizer
- * Domain Path:       /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -58,13 +57,9 @@ class BeanST_Image_Optimizer {
 	}
 
 	private function __construct() {
-		$this->init_hooks();
 		$this->init_classes();
 	}
 
-	private function init_hooks() {
-		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-	}
 
 	private function init_classes() {
 		$this->converter = new BeanST_Converter();
@@ -73,10 +68,6 @@ class BeanST_Image_Optimizer {
 		$this->rewrite   = new BeanST_Rewrite();
 		$this->lazy_load = new BeanST_Lazy_Load();
 		$this->frontend  = new BeanST_Frontend();
-	}
-
-	public function load_textdomain() {
-		load_plugin_textdomain( 'beanst-image-optimizer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 }
 
