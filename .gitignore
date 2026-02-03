@@ -1,0 +1,37 @@
+# WordPress Plugin Development
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.swp
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node.js (if using build tools later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build artifacts
+dist/
+build/
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+phpunit.xml
+.phpunit.result.cache
+tests/_output/
+vendor/
+
+# Environment
+.env
+.env.local

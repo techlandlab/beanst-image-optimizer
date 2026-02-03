@@ -215,7 +215,7 @@ if ( $percent === 100 && $total_images > 0 ) {
 				<span class="dashicons dashicons-book"></span>
 				<h3><?php esc_html_e( 'Documentation', 'beanst-image-optimizer' ); ?></h3>
 				<p><?php esc_html_e( 'Read the setup guide.', 'beanst-image-optimizer' ); ?></p>
-				<a href="#"><?php esc_html_e( 'Read Docs', 'beanst-image-optimizer' ); ?></a>
+				<a href="https://github.com/techlandlab/beanst-image-optimizer#readme" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Read Docs', 'beanst-image-optimizer' ); ?></a>
 			</div>
 			<div class="beanst-help-card">
 				<span class="dashicons dashicons-format-chat"></span>
