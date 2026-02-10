@@ -3,16 +3,16 @@ Contributors: techlandlab
 Tags: images, webp, avif, optimization, converter
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Smart local AVIF & WebP converter. Zero limits, local processing. Improves Core Web Vitals and page speed.
+Local AVIF & WebP converter with on-server processing. Improves Core Web Vitals and page speed.
 
 == Description ==
 
-**BeanST Image Optimizer** is a powerful, locally-hosted image optimization suite designed for performance-obsessed WordPress users. Unlike other plugins, BeanST processes everything on **your** server—no API limits, no monthly credits, and no third-party cloud dependencies.
+**BeanST Image Optimizer** is a locally-hosted image optimization plugin for WordPress. BeanST processes images on your server using PHP extensions—no API keys required, no monthly credits, and no third-party cloud dependencies.
 
 = Key Features =
 *   **Visual Proof (Comparison Slider)**: Compare original vs optimized images side-by-side.
@@ -36,6 +36,9 @@ No. All processing is done locally on your server using PHP extensions (Imagick/
 We recommend PHP 8.1+ and the Imagick extension with WebP/AVIF support.
 
 == Changelog ==
+
+= 1.1.3 =
+* Compliance: Updated readme.txt to remove promotional language per WordPress.org guidelines.
 
 = 1.1.2 =
 * Public Release Candidate.

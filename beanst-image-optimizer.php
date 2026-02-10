@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: BeanST Image Optimizer
- * Description: Local AVIF & WebP converter for WordPress. Zero limits, local processing.
- * Version:           1.1.2
+ * Description: Local AVIF & WebP converter for WordPress with on-server processing.
+ * Version:           1.1.3
  * Author:            TechLandLab
  * Author URI:        https://techlandlab.com
  * License:           GPL-2.0+
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Define Version
 if ( ! defined( 'BEANST_VERSION' ) ) {
-	define( 'BEANST_VERSION', '1.1.2' );
+	define( 'BEANST_VERSION', '1.1.3' );
 }
 
 // 1. Define Plugin Constants
